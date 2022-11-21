@@ -145,9 +145,14 @@ export default class {
       this.counter ++
     }
     // filtered Bills => 139 lignes filteredBills a utilisé.
-    bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
-    })
+    bills.forEach((bill) => {
+      if (!$(`#open-bill${bill.id}`).attr("created")) {
+        $(`#open-bill${bill.id}`).attr("created", true);
+        $(`#open-bill${bill.id}`).click((e) =>
+          this.handleEditTicket(e, bill, bills)
+        );
+      }
+    });
 
     return bills
 
@@ -169,7 +174,7 @@ export default class {
         return bills
       })
       .catch(error => {
-        throw error;
+        throw error
       })
     }
   }

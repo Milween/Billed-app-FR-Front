@@ -10,12 +10,12 @@ import { ROUTES_PATH } from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 
 import Bills from "../containers/Bills";
+
 import mockStore from "../__mocks__/store";
 import router from "../app/Router.js";
 import { get } from "express/lib/response";
 import NewBill from "../containers/NewBill.js";
 import NewBillUI from "../views/NewBillUI.js";
- 
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -71,6 +71,38 @@ describe("Given I am connected as an employee", () => {
       btn.addEventListener('click', handleClickNewBill)
       userEvent.click(btn)
       expect(handleClickNewBill).toHaveBeenCalled()
+    })
+  })
+
+  describe("When i click on button 'IconEye' ", () => {
+    test("Then a modal should open ", () => {
+      Object.defineProperty(window, "localeStorage", {
+        value: localStorageMock,
+      });
+      window.localStorage.setItem("user", JSON.stringify({ type: "Employee" }))
+
+      const html = BillsUI({ data: bills })
+      document.body.innerHTML = html
+
+      const billsContainer = new Bills({
+        document,
+        onNavigate,
+        store: mockStore,
+        localStorage: window.localStorage,
+      });
+
+      $.fn.modal = jest.fn()
+
+      const iconEye = screen.getAllByTestId("icon-eye")[0]
+      const handleShowModalFile = jest.fn((e) => {
+        billsContainer.handleClickIconEye(e.target)
+      });
+
+      iconEye.addEventListener("click", handleShowModalFile)
+      userEvent.click(iconEye)
+
+      expect(handleShowModalFile).toHaveBeenCalled()
+      expect(screen.getAllByText("Justificatif")).toBeTruthy()
     })
   })
 })

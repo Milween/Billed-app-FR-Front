@@ -13,9 +13,9 @@ import Bills from "../containers/Bills";
 
 import mockStore from "../__mocks__/store";
 import router from "../app/Router.js";
-import { get } from "express/lib/response";
-import NewBill from "../containers/NewBill.js";
-import NewBillUI from "../views/NewBillUI.js";
+// import { get } from "express/lib/response";
+// import NewBill from "../containers/NewBill.js";
+// import NewBillUI from "../views/NewBillUI.js";
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -46,8 +46,8 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  describe("when I click on button 'Nouvelle note de frais' ", () => {
-    test("Then, it should render NewBill page ", () => {
+  describe("when I click the button 'Nouvelle note de frais' ", () => {
+    test("Then, it should create NewBill page ", async () => {
       Object.defineProperty(window, "localStorage", {
         value : localStorageMock,
       })
@@ -74,8 +74,8 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  describe("When i click on button 'IconEye' ", () => {
-    test("Then a modal should open ", () => {
+  describe("When i click on the eye icon ", () => {
+    test("Then a modal should open ", async () => {
       Object.defineProperty(window, "localeStorage", {
         value: localStorageMock,
       });
@@ -97,12 +97,35 @@ describe("Given I am connected as an employee", () => {
       const handleShowModalFile = jest.fn((e) => {
         billsContainer.handleClickIconEye(e.target)
       });
-
+      
       iconEye.addEventListener("click", handleShowModalFile)
       userEvent.click(iconEye)
-
+      
       expect(handleShowModalFile).toHaveBeenCalled()
       expect(screen.getAllByText("Justificatif")).toBeTruthy()
+    })
+  })
+})
+
+describe("Given I am a user connected as Employee", () => {
+  describe("When I navigate inside Bills", () => {
+    test("fetching bills with API GET", async () => {
+      localStorage.setItem("user", JSON.stringify({ type: "Employee", email: "b@b" })
+      );
+      
+      const root = document.createElement("div")
+      root.setAttribute("id", "root")
+      document.body.append(root)
+      router()
+
+      window.onNavigate(ROUTES_PATH.Bills);
+      await waitFor(() => screen.getByText("Mes notes de frais"))
+      expect(screen.getByText("Mes notes de frais")).toBeTruthy()
+    });
+    describe("When an error is caught in the API", () => {
+      test("Then it should display a 404 error message", async () => {
+
+      })
     })
   })
 })

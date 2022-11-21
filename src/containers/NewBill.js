@@ -21,7 +21,7 @@ export default class NewBill {
     // Si file.type === jpeg / jpg / png alors return true 
     const fileName = file.name
     const fileType = fileName.split(".").at(-1)
-    console.log(fileName, 'titi')
+    console.log(fileName)
     console.log(fileType)
 
     const acceptedFileType = ["png", "jpg", "jpeg"].includes(fileType.toLowerCase())
@@ -31,7 +31,7 @@ export default class NewBill {
       window.alert("Wrong file format. Accepted formats: .jpg .jpeg .png")
       return
     }
-    
+
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)

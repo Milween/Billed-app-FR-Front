@@ -144,7 +144,7 @@ export default class {
         .html("")
       this.counter ++
     }
-
+    // filtered Bills => 139 lignes filteredBills a utilisé.
     bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })

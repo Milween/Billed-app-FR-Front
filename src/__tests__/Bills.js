@@ -140,7 +140,7 @@ describe("Given I am a user connected as Employee", () => {
         Object.defineProperty(window, 'localStorage', { value: localStorageMock })
         window.localStorage.setItem('user', JSON.stringify({
           type: 'Employee',
-          email: "b@b"
+          email: "a@a"
         }))
 
         const root = document.createElement("div")

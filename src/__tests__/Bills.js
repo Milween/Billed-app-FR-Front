@@ -44,9 +44,7 @@ describe("Given I am connected as an employee", () => {
 
   describe("when I click the button 'Nouvelle note de frais' ", () => {
     test("Then, it should create NewBill page ", async () => {
-      Object.defineProperty(window, "localStorage", {
-        value : localStorageMock,
-      })
+      Object.defineProperty(window, "localStorage", { value: localStorageMock, })
       window.localStorage.setItem("user", JSON.stringify({ type : "Employee" }))
       const html = BillsUI({ data: bills })
       document.body.innerHTML = html;

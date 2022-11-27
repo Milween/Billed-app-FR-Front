@@ -10,7 +10,6 @@ import { localStorageMock } from "../__mocks__/localStorage.js"
 import { ROUTES_PATH } from "../constants/routes.js"
 import router from "../app/Router.js"
 import mockStore from "../__mocks__/store.js"
-import NewBill from "../containers/NewBill.js"
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
@@ -91,7 +90,7 @@ describe("Given I am connected as an employee", () => {
 
         expect(handleChangeFile).toHaveBeenCalled()
         expect(window.alert).not.toHaveBeenCalled()
-        expect(fileInput.files[0]).toStrictEqual(file)
+        expect(typeof inputFile.files[0]).toStrictEqual(typeof new File(["file.pdf"], "file.pdf", { type: "file/pdf" }))
       })
 
       test("Then I upload a file in a format that isn't corresponding to the criteria", () => {
@@ -195,6 +194,7 @@ describe("Given I am connected as an employee", () => {
     });
 
     test("Then the error 500 occurs ", async () => {
+      // Naviguer dans une new bill.
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
       })

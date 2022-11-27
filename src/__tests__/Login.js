@@ -26,7 +26,6 @@ describe("Given that I am a user on login page", () => {
       expect(screen.getByTestId("form-employee")).toBeTruthy();
     });
   });
-
   describe("When I do fill fields in incorrect format and I click on employee button Login In", () => {
     test("Then It should renders Login page", () => {
       document.body.innerHTML = LoginUI();
@@ -76,15 +75,14 @@ describe("Given that I am a user on login page", () => {
         },
         writable: true,
       });
-
       // we have to mock navigation to test it
       const onNavigate = (pathname) => {
-        document.body.innerHTML = ROUTES({ pathname });
+        document.body.innerHTML = ROUTES({ pathname })
       };
 
-      let PREVIOUS_LOCATION = "";
+      let PREVIOUS_LOCATION = ""
 
-      const store = jest.fn();
+      const store = jest.fn()
 
       const login = new Login({
         document,

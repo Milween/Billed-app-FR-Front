@@ -75,6 +75,7 @@ describe("Given that I am a user on login page", () => {
         },
         writable: true,
       });
+      
       // we have to mock navigation to test it
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })

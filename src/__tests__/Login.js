@@ -82,7 +82,7 @@ describe("Given that I am a user on login page", () => {
 
       let PREVIOUS_LOCATION = ""
 
-      const store = jest.fn()
+      const store = jest.fn();
 
       const login = new Login({
         document,
@@ -174,7 +174,7 @@ describe("Given that I am a user on login page", () => {
       fireEvent.change(inputPasswordUser, {
         target: { value: inputData.password },
       });
-      expect(inputPasswordUser.value).toBe(inputData.password)
+      expect(inputPasswordUser.value).toBe(inputData.password);
 
       const form = screen.getByTestId("form-admin");
 
@@ -185,7 +185,7 @@ describe("Given that I am a user on login page", () => {
           setItem: jest.fn(() => null),
         },
         writable: true,
-      })
+      });
 
       // we have to mock navigation to test it
       const onNavigate = (pathname) => {
@@ -194,7 +194,7 @@ describe("Given that I am a user on login page", () => {
 
       let PREVIOUS_LOCATION = ""
 
-      const store = jest.fn()
+      const store = jest.fn();
 
       const login = new Login({
         document,
@@ -202,7 +202,7 @@ describe("Given that I am a user on login page", () => {
         onNavigate,
         PREVIOUS_LOCATION,
         store,
-      })
+      });
 
       const handleSubmit = jest.fn(login.handleSubmitAdmin)
       login.login = jest.fn().mockResolvedValue({});

@@ -153,9 +153,6 @@ export default class {
         );
       }
     });
-
-    return bills
-
   }
 
   getBillsAllUsers = () => {

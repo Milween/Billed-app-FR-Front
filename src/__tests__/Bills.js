@@ -9,9 +9,9 @@ import { getBills } from "../fixtures/bills.js";
 import { ROUTES, ROUTES_PATH } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import router from "../app/Router.js";
-import Bills from "../containers/Bills";
+import Bills from "../containers/Bills.js";
 import userEvent from "@testing-library/user-event";
-import mockStore from "../__mocks__/store";
+import mockStore from "../__mocks__/store.js";
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {

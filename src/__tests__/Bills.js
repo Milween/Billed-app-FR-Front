@@ -137,16 +137,16 @@ describe("Given I am connected as an employee", () => {
       describe("when it succed", () => {
         test("Then it should return an array with the corresponding length", async () => {
           const getSpy = jest.spyOn(mockStore, "bills");
-          const bills = await mockStore.bills();
+          const bills = mockStore.bills();
           expect(getSpy).toHaveBeenCalledTimes(1);
           expect((await bills.list()).length).toBe(4);
         });
       });
       describe("When it fails with a 404 error message", () => {
         test("Then if should display a 404 error message", async () => {
-          mockStore.bills.mockImplementationOnce(() => {
-            Promise.reject(new Error("Erreur 404"));
-          });
+          // mockStore.bills.mockImplementationOnce(() => {
+          //   Promise.reject(new Error("Erreur 404"));
+          // });
           const html = BillsUI({ error: "Erreur 404" });
           document.body.innerHTML = html;
           const message = screen.getByText(/Erreur 404/);
@@ -155,9 +155,9 @@ describe("Given I am connected as an employee", () => {
       });
       describe("When it fails with a 500 error message", () => {
         test("Then it should display a 500 error message", async () => {
-          mockStore.bills.mockImplementationOnce(() => {
-            Promise.reject(new Error("Erreur 500"));
-          });
+          // mockStore.bills.mockImplementationOnce(() => {
+          //   Promise.reject(new Error("Erreur 500"));
+          // });
           const html = BillsUI({ error: "Erreur 500" });
           document.body.innerHTML = html;
 

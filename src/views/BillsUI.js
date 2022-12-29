@@ -26,7 +26,7 @@ const rows = (data) => {
 export default ({ data: bills, loading, error }) => {
   
   if (bills && bills.length) {
-    bills.sort((a, b) => ((a.date < b.date) ? 1 : -1))
+    bills.sort((a, b) => ((a.date > b.date) ? 1 : -1))
   }
   
   const modal = () => (`

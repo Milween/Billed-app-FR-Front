@@ -16,32 +16,51 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate });
   }
   handleChangeFile = (e) => {
+    // [BUG HUNT] - bills
+    // empêcher la saisie d'un document qui a une extension différente de jpg, jpeg ou png.
+
     e.preventDefault();
+    // Sélection de l'input file pour le reset en cas d'erreur du format fichier.
+    const inputFileElement = this.document.querySelector(`input[data-testid="file"]`);
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0];
     const filePath = e.target.value.split(/\\/g);
     console.log(filePath);
     const fileName = filePath[filePath.length -1];
+    const fileExtension = fileName.split('.').pop();
     const formData = new FormData();
     const email = JSON.parse(localStorage.getItem("user")).email;
     formData.append("file", file)
     formData.append("email", email);
+    // définition des formats valides.
+    const formats = ["jpg", "jpeg", "png"];
 
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({fileUrl, key}) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      })
-      .catch(error => console.error(error))
-  }
+    // Si l'extension correspondant aux formats => applique la fonction handleStore.
+    // Sinon créer une alerte pour obtenir le bon format de fichier de la part de l'utilisateur et vide l'input du mauvais contenu.
+    if (formats.includes(fileExtension)) {
+      this.handleStore(formData, fileName);
+    } else {
+      alert('Le format du fichier doit être jpg, jpeg ou png');
+      inputFileElement.value = "";
+    }
+  }  
+    // fonction handleStore => Créer une bill avec les informations et la stock.
+    handleStore(formData, fileName) {
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true
+          },
+        })
+        .then(({fileUrl, key}) => {
+          console.log(fileUrl)
+          this.billId = key
+          this.fileUrl = fileUrl
+          this.fileName = fileName
+        })
+        .catch(error => console.error(error))
+    }
 
   handleSubmit = (e) => {
     e.preventDefault()

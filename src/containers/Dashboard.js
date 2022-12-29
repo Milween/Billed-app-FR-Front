@@ -131,6 +131,16 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
+
+    // changes [bug hunt] - Dashboard.
+    bills.forEach((bill) => {
+      //console.log(bill);
+      // .off Remove an event handler.
+
+      // Nous souhaitons supprimer le premier des events listener.
+      // $(`element`).off('click')
+      $(`#open-bill${bill.id}`).off('click');
+    });
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
@@ -144,15 +154,13 @@ export default class {
         .html("")
       this.counter ++
     }
-    // filtered Bills => 139 lignes filteredBills a utilisé.
-    bills.forEach((bill) => {
-      if (!$(`#open-bill${bill.id}`).attr("created")) {
-        $(`#open-bill${bill.id}`).attr("created", true);
-        $(`#open-bill${bill.id}`).click((e) =>
-          this.handleEditTicket(e, bill, bills)
-        );
-      }
-    });
+
+    bills.forEach(bill => {
+      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+    })
+
+    return bills
+
   }
 
   getBillsAllUsers = () => {

@@ -24,9 +24,9 @@ const rows = (data) => {
 }
 
 export default ({ data: bills, loading, error }) => {
-  
+  // [ BUG HUNT ] Classer par ordre décroissant grâce à une méthode sort. revoir
   if (bills && bills.length) {
-    bills.sort((a, b) => ((a.date > b.date) ? 1 : -1))
+    bills.sort((a, b) => ((a.date < b.date) ? -1 : 1))
   }
   
   const modal = () => (`
